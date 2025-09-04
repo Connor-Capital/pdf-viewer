@@ -793,5 +793,34 @@ See https://github.com/adobe-type-tools/cmap-resources
 
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
+
+      <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            // Disable zoom buttons & dropdown if still present
+            const disableZoom = () => {
+              const zoomIn = document.getElementById("zoomIn");
+              const zoomOut = document.getElementById("zoomOut");
+              const scaleSelect = document.getElementById("scaleSelect");
+              if (zoomIn) zoomIn.style.display = "none";
+              if (zoomOut) zoomOut.style.display = "none";
+              if (scaleSelect) scaleSelect.style.display = "none";
+            };
+            disableZoom();
+        
+            // Block keyboard zoom shortcuts
+            window.addEventListener("keydown", (e) => {
+              if ((e.ctrlKey || e.metaKey) && ["+", "-", "0", "="].includes(e.key)) {
+                e.preventDefault();
+              }
+            });
+        
+            // Block pinch-to-zoom (iPad)
+            document.querySelector("meta[name=viewport]")?.setAttribute(
+              "content",
+              "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            );
+          });
+        </script>
+
   </body>
 </html>
